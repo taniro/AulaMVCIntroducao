@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+<h1>Boa tarde!</h1>
+
+<div th:each="p : ${arrayListPessoas}">
+    <p th:text="${p.nome}"> </p> <a th:href="@{'/editar/' + ${p.idade}}"> EDITAR </a>
+</div>
+
+
+
+<p th:text="${arrayListPessoas}"></p>
 </body>
 </html>
