@@ -2,26 +2,37 @@ package ufrn.br.aulamvcintroducao.service;
 
 import org.springframework.stereotype.Service;
 import ufrn.br.aulamvcintroducao.domain.Pessoa;
+import ufrn.br.aulamvcintroducao.repository.PessoaRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PessoaService {
+    PessoaRepository pessoaRepository;
 
-    ArrayList<Pessoa> pessoas = new ArrayList<>();
-
-    public PessoaService() {
+    public PessoaService(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
     }
 
     public void addNewPessoa(Pessoa p ){
-        pessoas.add(p);
+        pessoaRepository.save(p);
     }
 
-    public ArrayList<Pessoa> getPessoas() {
-        return pessoas;
+    public Pessoa getById(Long id){
+        return pessoaRepository.getById(id);
     }
 
-    public void setPessoas(ArrayList<Pessoa> pessoas) {
-        this.pessoas = pessoas;
+    public void deletePessoa(Long id){
+        pessoaRepository.deleteById(id);
     }
+
+    public void updatePessoa(Pessoa p){
+        pessoaRepository.save(p);
+    }
+
+    public List<Pessoa> listAll(){
+        return  pessoaRepository.findAll();
+    }
+
 }

@@ -1,35 +1,28 @@
 package ufrn.br.aulamvcintroducao.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Entity
 public class Pessoa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
     String nome;
     Integer idade;
     String sexo;
     Float altura;
     Float peso;
 
-
-    public Pessoa() {
-    }
-
-    public Pessoa(String nome, Integer idade, String sexo, Float altura, Float peso) {
-        this.nome = nome;
-        this.idade = idade;
-        this.sexo = sexo;
-        this.altura = altura;
-        this.peso = peso;
-    }
-
-    @Override
-    public String toString() {
-        return "Pessoa{" +
-                "nome='" + nome + '\'' +
-                ", idade=" + idade +
-                ", sexo='" + sexo + '\'' +
-                ", altura=" + altura +
-                ", peso=" + peso +
-                '}';
+    public Long getId() {
+        return id;
     }
 
     public String getNome() {
@@ -70,13 +63,5 @@ public class Pessoa {
 
     public void setPeso(Float peso) {
         this.peso = peso;
-    }
-
-    public void crescer(){
-        altura+=1;
-    }
-
-    public void apresentar(){
-        System.out.println("Nome: " + nome);
     }
 }
