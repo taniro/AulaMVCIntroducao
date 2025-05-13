@@ -6,6 +6,7 @@
 </head>
 <body>
 <form method="post" th:action="@{/doProcessCadastro}" th:object="${pessoa}">
+    <input type="hidden" th:field="*{id}">
     Nome:<input type="text" th:field="*{nome}"/> <br />
     Idade:<input type="number" th:field="*{idade}" /> <br />
     Sexo:<input type="text" th:field="*{sexo}"/> <br />

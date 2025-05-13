@@ -7,7 +7,9 @@
 <body>
 <form method="post" th:action="@{/doProcessCadastro}" th:object="${pessoa}">
     Nome:<input type="text" th:field="*{nome}"/> <br />
+    <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
     Idade:<input type="number" th:field="*{idade}" /> <br />
+    <p th:if="${#fields.hasErrors('idade')}" th:errors="*{idade}"></p>
     Sexo:<input type="text" th:field="*{sexo}"/> <br />
     Altura:<input type="number" th:field="*{altura}"/> <br />
     Peso:<input type="number" th:field="*{peso}"/> <br />

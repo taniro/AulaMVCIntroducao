@@ -1,14 +1,18 @@
 package ufrn.br.aulamvcintroducao.controller;
 
-import jakarta.websocket.server.PathParam;
+
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ufrn.br.aulamvcintroducao.domain.Pessoa;
 import ufrn.br.aulamvcintroducao.service.PessoaService;
+
+import java.util.Optional;
 
 
 @Controller
@@ -38,8 +42,19 @@ public class ControllerPrincipal {
     }
 
     @PostMapping("/doProcessCadastro")
-    public String doProcessCadastro(@ModelAttribute Pessoa pessoa){
-        pessoaService.addNewPessoa(pessoa);
+    public String doProcessCadastro(@ModelAttribute @Valid Pessoa pessoa, Errors errors){
+
+        if (errors.hasErrors()){
+            return "cadastro";
+        }else {
+            pessoaService.addNewPessoa(pessoa);
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/doProcessEdit/{id}")
+    public String doProcessEdit(@ModelAttribute Pessoa pessoa){
+        pessoaService.updatePessoa(pessoa);
         return "redirect:/";
     }
 
@@ -51,9 +66,23 @@ public class ControllerPrincipal {
 
     @GetMapping("/editar/{id}")
     public String getEditarPage(@PathVariable Long id, Model model){
-        Pessoa p = pessoaService.getById(id);
-        model.addAttribute("pessoa", p);
-        return "editar";
+        Optional<Pessoa> p = pessoaService.getById(id);
+        if (p.isPresent()){
+            model.addAttribute("pessoa", p.get());
+            return "editar";
+        }else{
+            return "redirect:/";
+        }
+
+    }
+
+    @GetMapping("/pessoasPorIdade")
+    public String getPessoasPorIdadePage(Model model){
+
+        var pessoas = pessoaService.getPessoaByIdade(40);
+        model.addAttribute("pessoas", pessoas);
+
+        return "pessoas";
     }
 
 }
